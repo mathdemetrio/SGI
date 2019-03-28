@@ -144,6 +144,7 @@ DrawingFrame = builder.get_object("DrawingFrame")
 
 objectTreeView = builder.get_object("objectTreeView")
 
+
 btnPonto = builder.get_object("btnPonto")
 btnReta = builder.get_object("btnReta")
 btnPoligono = builder.get_object("btnPoligono")
