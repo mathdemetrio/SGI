@@ -3,6 +3,15 @@ import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
+from window import Window
+
+SIZE = 10
+xViewPortMax = 500
+xViewPortMin = 0
+yViewPortMax = 500
+yViewPortMin = 0
+
+tela = Window(xViewPortMin, yViewPortMin, xViewPortMax, yViewPortMax)
 
 class Handler:
     def onDestroy(self, *args):
@@ -12,7 +21,17 @@ class Handler:
 def onBtnPontoClicked(button):
     PontoWindow.show_all()
 
-SIZE = 10
+
+def transformadaViewPortCoordenadaX(x):
+    auxiliar = (x - tela.getXMin()) / (tela.getXMax() - tela.getXMin())
+
+    return auxiliar * (xViewPortMax - xViewPortMin)
+
+
+def transformadaViewPortCoordenadaY(y):
+    auxiliar = (y - tela.getYMin()) / (tela.getYMax() - tela.getYMin())
+
+    return (1 - auxiliar) * (yViewPortMax - yViewPortMin)
 
 
 def triangle(ctx):
@@ -103,7 +122,8 @@ def draw(da, ctx):
     ctx.set_line_cap(cairo.LINE_CAP_ROUND)
     #ctx.set_tolerance(0.1)
 
-    x, y = 50, 50
+    x = transformadaViewPortCoordenadaX(50)
+    y = transformadaViewPortCoordenadaY(50)
     ctx.move_to(x, y)
     ctx.line_to(x, y)
     ctx.stroke_preserve()
